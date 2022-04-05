@@ -143,7 +143,10 @@ function validate_upgrade_cluster_to_prerelease() {
         TARGET_VERSION=${DEV_VERSION::-44}
         echo "Installed CLI version ${DEV_VERSION}"
         echo "Upgrading cluster to ${DEV_VERSION}"
-        $FLUVIO_BIN_ABS_PATH cluster upgrade
+        if ! $FLUVIO_BIN_ABS_PATH cluster upgrade; then
+            kubectl get pods
+        fi
+        
         echo "Wait for SPU to be upgraded. sleeping 1 minute"
     else
         echo "Test local image v${PRERELEASE}"
