@@ -145,6 +145,7 @@ function validate_upgrade_cluster_to_prerelease() {
         echo "Upgrading cluster to ${DEV_VERSION}"
         if ! $FLUVIO_BIN_ABS_PATH cluster upgrade; then
             kubectl get pods
+            kubectl describe pods
         fi
         
         echo "Wait for SPU to be upgraded. sleeping 1 minute"
